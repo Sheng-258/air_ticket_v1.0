@@ -42,37 +42,7 @@ void showMenu();
 
 
 
-//9. 显示菜单
-void showMenu() {
-    int choice;
-    do {
-        printf("\n--- Airline Ticketing System ---\n");
-        printf("1. Add Flight\n");
-        printf("2. Delete Flight\n");
-        printf("3. List Flights\n");
-        printf("4. Add Passenger\n");
-        printf("5. Delete Passenger\n");
-        printf("6. List Passengers\n");
-        printf("7. Book Ticket\n");
-        printf("8. Cancel Ticket\n");
-        printf("9. Exit\n");
-        printf("Enter your choice: ");
-        scanf("%d", &choice);
 
-        switch (choice) {
-            case 1: addFlight(); break;
-            case 2: deleteFlight(); break;
-            case 3: listFlights(); break;
-            case 4: addPassenger(); break;
-            case 5: deletePassenger(); break;
-            case 6: listPassengers(); break;
-            case 7: bookTicket(); break;
-            case 8: cancelTicket(); break;
-            case 9: printf("Exiting...\n"); break;
-            default: printf("Invalid choice. Please try again.\n");
-        }
-    } while (choice != 9);
-}
 //主函数
 int main() {
     showMenu();
