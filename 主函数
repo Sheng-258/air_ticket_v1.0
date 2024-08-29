@@ -39,24 +39,7 @@ void showMenu();
 
 
 
-//4.添加乘客
-void addPassenger() {
-    if (passengerCount >= MAX_PASSENGERS) {
-        printf("Cannot add more passengers. Maximum capacity reached.\n");
-        return;
-    }
 
-    Passenger newPassenger;
-    printf("Enter passenger name: ");
-    scanf("%s", newPassenger.passengerName);
-    printf("Enter flight code: ");
-    scanf("%s", newPassenger.flightCode);
-    printf("Enter seat number: ");
-    scanf("%d", &newPassenger.seatNumber);
-
-    passengers[passengerCount++] = newPassenger;
-    printf("Passenger added successfully.\n");
-}
 //5. 删除乘客
 void deletePassenger() {
     char name[MAX_NAME];
