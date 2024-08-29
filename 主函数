@@ -1,0 +1,199 @@
+//数据结构：
+//1. 航班信息结构体
+#include<stdio.h>
+#define MAX_FLIGHTS 100
+#define MAX_FLIGHT_CODE 10
+#define MAX_DESTINATION 50
+
+typedef struct {
+    char flightCode[MAX_FLIGHT_CODE];
+    char destination[MAX_DESTINATION];
+    int availableSeats;
+    float price;
+} Flight;
+//2. 乘客信息结构体
+#define MAX_PASSENGERS 100
+#define MAX_NAME 50
+
+typedef struct {
+    char passengerName[MAX_NAME];
+    char flightCode[MAX_FLIGHT_CODE];
+    int seatNumber;
+} Passenger;
+//全局变量
+Flight flights[MAX_FLIGHTS];
+Passenger passengers[MAX_PASSENGERS];
+int flightCount = 0;
+int passengerCount = 0;
+//函数声明
+void addFlight();
+void deleteFlight();
+void listFlights();
+void addPassenger();
+void deletePassenger();
+void listPassengers();
+void bookTicket();
+void cancelTicket();
+void showMenu();
+
+
+//2. 删除航班
+void deleteFlight() {
+    char flightCode[MAX_FLIGHT_CODE];
+    printf("Enter flight code to delete: ");
+    scanf("%s", flightCode);
+
+    for (int i = 0; i < flightCount; i++) {
+        if (strcmp(flights[i].flightCode, flightCode) == 0) {
+            for (int j = i; j < flightCount - 1; j++) {
+                flights[j] = flights[j + 1];
+            }
+            flightCount--;
+            printf("Flight deleted successfully.\n");
+            return;
+        }
+    }
+    printf("Flight not found.\n");
+}
+//3. 列出所有航班
+void listFlights() {
+    if (flightCount == 0) {
+        printf("No flights available.\n");
+        return;
+    }
+
+    printf("Available flights:\n");
+    for (int i = 0; i < flightCount; i++) {
+        printf("Flight Code: %s, Destination: %s, Available Seats: %d, Price: %.2f\n",
+               flights[i].flightCode, flights[i].destination, flights[i].availableSeats, flights[i].price);
+    }
+}
+//4.添加乘客
+void addPassenger() {
+    if (passengerCount >= MAX_PASSENGERS) {
+        printf("Cannot add more passengers. Maximum capacity reached.\n");
+        return;
+    }
+
+    Passenger newPassenger;
+    printf("Enter passenger name: ");
+    scanf("%s", newPassenger.passengerName);
+    printf("Enter flight code: ");
+    scanf("%s", newPassenger.flightCode);
+    printf("Enter seat number: ");
+    scanf("%d", &newPassenger.seatNumber);
+
+    passengers[passengerCount++] = newPassenger;
+    printf("Passenger added successfully.\n");
+}
+//5. 删除乘客
+void deletePassenger() {
+    char name[MAX_NAME];
+    printf("Enter passenger name to delete: ");
+    scanf("%s", name);
+
+    for (int i = 0; i < passengerCount; i++) {
+        if (strcmp(passengers[i].passengerName, name) == 0) {
+            for (int j = i; j < passengerCount - 1; j++) {
+                passengers[j] = passengers[j + 1];
+            }
+            passengerCount--;
+            printf("Passenger deleted successfully.\n");
+            return;
+        }
+    }
+    printf("Passenger not found.\n");
+}
+//6. 列出所有乘客
+void listPassengers() {
+    if (passengerCount == 0) {
+        printf("No passengers found.\n");
+        return;
+    }
+
+    printf("List of passengers:\n");
+    for (int i = 0; i < passengerCount; i++) {
+        printf("Passenger Name: %s, Flight Code: %s, Seat Number: %d\n",
+               passengers[i].passengerName, passengers[i].flightCode, passengers[i].seatNumber);
+    }
+}
+//7. 预订机票
+void bookTicket() {
+    char flightCode[MAX_FLIGHT_CODE];
+    printf("Enter flight code to book: ");
+    scanf("%s", flightCode);
+
+    for (int i = 0; i < flightCount; i++) {
+        if (strcmp(flights[i].flightCode, flightCode) == 0) {
+            if (flights[i].availableSeats > 0) {
+                addPassenger();
+                flights[i].availableSeats--;
+                return;
+            } else {
+                printf("No seats available.\n");
+                return;
+            }
+        }
+    }
+    printf("Flight not found.\n");
+}
+//8. 取消机票
+void cancelTicket() {
+    char name[MAX_NAME];
+    printf("Enter passenger name to cancel ticket: ");
+    scanf("%s", name);
+
+    for (int i = 0; i < passengerCount; i++) {
+        if (strcmp(passengers[i].passengerName, name) == 0) {
+            for (int j = 0; j < flightCount; j++) {
+                if (strcmp(flights[j].flightCode, passengers[i].flightCode) == 0) {
+                    flights[j].availableSeats++;
+                    break;
+                }
+            }
+            for (int k = i; k < passengerCount - 1; k++) {
+                passengers[k] = passengers[k + 1];
+            }
+            passengerCount--;
+            printf("Ticket cancelled successfully.\n");
+            return;
+        }
+    }
+    printf("Passenger not found.\n");
+}
+//9. 显示菜单
+void showMenu() {
+    int choice;
+    do {
+        printf("\n--- Airline Ticketing System ---\n");
+        printf("1. Add Flight\n");
+        printf("2. Delete Flight\n");
+        printf("3. List Flights\n");
+        printf("4. Add Passenger\n");
+        printf("5. Delete Passenger\n");
+        printf("6. List Passengers\n");
+        printf("7. Book Ticket\n");
+        printf("8. Cancel Ticket\n");
+        printf("9. Exit\n");
+        printf("Enter your choice: ");
+        scanf("%d", &choice);
+
+        switch (choice) {
+            case 1: addFlight(); break;
+            case 2: deleteFlight(); break;
+            case 3: listFlights(); break;
+            case 4: addPassenger(); break;
+            case 5: deletePassenger(); break;
+            case 6: listPassengers(); break;
+            case 7: bookTicket(); break;
+            case 8: cancelTicket(); break;
+            case 9: printf("Exiting...\n"); break;
+            default: printf("Invalid choice. Please try again.\n");
+        }
+    } while (choice != 9);
+}
+//主函数
+int main() {
+    showMenu();
+    return 0;
+}
