@@ -1,0 +1,44 @@
+//7. 预订机票
+void bookTicket() {
+    char flightCode[MAX_FLIGHT_CODE];
+    printf("Enter flight code to book: ");
+    scanf("%s", flightCode);
+
+    for (int i = 0; i < flightCount; i++) {
+        if (strcmp(flights[i].flightCode, flightCode) == 0) {
+            if (flights[i].availableSeats > 0) {
+                addPassenger();
+                flights[i].availableSeats--;
+                return;
+            } else {
+                printf("No seats available.\n");
+                return;
+            }
+        }
+    }
+    printf("Flight not found.\n");
+}
+//8. 取消机票
+void cancelTicket() {
+    char name[MAX_NAME];
+    printf("Enter passenger name to cancel ticket: ");
+    scanf("%s", name);
+
+    for (int i = 0; i < passengerCount; i++) {
+        if (strcmp(passengers[i].passengerName, name) == 0) {
+            for (int j = 0; j < flightCount; j++) {
+                if (strcmp(flights[j].flightCode, passengers[i].flightCode) == 0) {
+                    flights[j].availableSeats++;
+                    break;
+                }
+            }
+            for (int k = i; k < passengerCount - 1; k++) {
+                passengers[k] = passengers[k + 1];
+            }
+            passengerCount--;
+            printf("Ticket cancelled successfully.\n");
+            return;
+        }
+    }
+    printf("Passenger not found.\n");
+}
