@@ -38,19 +38,7 @@ void showMenu();
 
 
 
-//3. 列出所有航班
-void listFlights() {
-    if (flightCount == 0) {
-        printf("No flights available.\n");
-        return;
-    }
 
-    printf("Available flights:\n");
-    for (int i = 0; i < flightCount; i++) {
-        printf("Flight Code: %s, Destination: %s, Available Seats: %d, Price: %.2f\n",
-               flights[i].flightCode, flights[i].destination, flights[i].availableSeats, flights[i].price);
-    }
-}
 //4.添加乘客
 void addPassenger() {
     if (passengerCount >= MAX_PASSENGERS) {
