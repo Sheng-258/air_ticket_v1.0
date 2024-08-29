@@ -1,0 +1,31 @@
+//5. 删除乘客
+void deletePassenger() {
+    char name[MAX_NAME];
+    printf("Enter passenger name to delete: ");
+    scanf("%s", name);
+
+    for (int i = 0; i < passengerCount; i++) {
+        if (strcmp(passengers[i].passengerName, name) == 0) {
+            for (int j = i; j < passengerCount - 1; j++) {
+                passengers[j] = passengers[j + 1];
+            }
+            passengerCount--;
+            printf("Passenger deleted successfully.\n");
+            return;
+        }
+    }
+    printf("Passenger not found.\n");
+}
+//6. 列出所有乘客
+void listPassengers() {
+    if (passengerCount == 0) {
+        printf("No passengers found.\n");
+        return;
+    }
+
+    printf("List of passengers:\n");
+    for (int i = 0; i < passengerCount; i++) {
+        printf("Passenger Name: %s, Flight Code: %s, Seat Number: %d\n",
+               passengers[i].passengerName, passengers[i].flightCode, passengers[i].seatNumber);
+    }
+}
