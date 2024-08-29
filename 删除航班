@@ -1,0 +1,19 @@
+//2. 删除航班
+void deleteFlight() 
+{
+    char flightCode[MAX_FLIGHT_CODE];
+    printf("Enter flight code to delete: ");
+    scanf("%s", flightCode);
+
+    for (int i = 0; i < flightCount; i++) {
+        if (strcmp(flights[i].flightCode, flightCode) == 0) {
+            for (int j = i; j < flightCount - 1; j++) {
+                flights[j] = flights[j + 1];
+            }
+            flightCount--;
+            printf("Flight deleted successfully.\n");
+            return;
+        }
+    }
+    printf("Flight not found.\n");
+}
