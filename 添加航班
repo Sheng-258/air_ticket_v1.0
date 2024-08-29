@@ -1,0 +1,22 @@
+//函数实现
+//1.添加航班
+void addFlight() 
+{
+    if (flightCount >= MAX_FLIGHTS) {
+        printf("Cannot add more flights. Maximum capacity reached.\n");
+        return;
+    }
+
+    Flight newFlight;
+    printf("Enter flight code: ");
+    scanf("%s", newFlight.flightCode);
+    printf("Enter destination: ");
+    scanf("%s", newFlight.destination);
+    printf("Enter available seats: ");
+    scanf("%d", &newFlight.availableSeats);
+    printf("Enter price: ");
+    scanf("%f", &newFlight.price);
+
+    flights[flightCount++] = newFlight;
+    printf("Flight added successfully.\n");
+}
